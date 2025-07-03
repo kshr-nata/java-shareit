@@ -4,16 +4,28 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import ru.practicum.shareit.item.model.Item;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ItemMapper {
+
     public static ItemDto toItemDto(Item item) {
         return new ItemDto(
                 item.getId(),
                 item.getName(),
                 item.getDescription(),
-                item.getAvailable()
-                //item.getRequest() != null ? item.getRequest().getId() : null
+                item.getAvailable(),
+                item.getComments()
         );
+    }
+
+    public static List<ItemDto> toItemDto(Iterable<Item> items) {
+        List<ItemDto> dtos = new ArrayList<>();
+        for (Item item : items) {
+            dtos.add(toItemDto(item));
+        }
+        return dtos;
     }
 
     public static Item updateItemFields(Item item, ItemUpdateRequest request) {
@@ -28,4 +40,5 @@ public final class ItemMapper {
         }
         return item;
     }
+
 }

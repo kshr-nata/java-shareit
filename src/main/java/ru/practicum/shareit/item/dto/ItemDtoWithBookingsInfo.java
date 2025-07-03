@@ -1,19 +1,16 @@
 package ru.practicum.shareit.item.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import ru.practicum.shareit.booking.dto.BookingInfo;
 
 import java.util.Set;
 
-/**
- * TODO Sprint add-controllers.
- */
-@Data
-@AllArgsConstructor
-public class ItemDto {
+
+public class ItemDtoWithBookingsInfo {
     Integer id;
     String name;
     String description;
     boolean available;
+    BookingInfo lastBooking;
+    BookingInfo nextBooking;
     Set<String> comments;
 }

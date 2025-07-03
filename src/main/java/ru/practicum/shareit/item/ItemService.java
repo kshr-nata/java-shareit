@@ -2,6 +2,8 @@ package ru.practicum.shareit.item;
 
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemUpdateRequest;
+import ru.practicum.shareit.item.dto.NewCommentRequest;
+import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
 
 import java.util.Collection;
@@ -17,4 +19,6 @@ public interface ItemService {
     ItemDto findItemById(int itemId);
 
     Collection<ItemDto> searchItems(String text);
+
+    Comment createComment(int userId, int itemId, NewCommentRequest request);
 }

@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemUpdateRequest;
+import ru.practicum.shareit.item.dto.NewCommentRequest;
+import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
 
 import java.util.Collection;
@@ -14,7 +16,7 @@ import java.util.Collection;
  */
 @RestController
 @RequestMapping("/items")
-public class ItemController {
+public class  ItemController {
     private final ItemService itemService;
 
     @Autowired
@@ -49,5 +51,12 @@ public class ItemController {
     @GetMapping("search")
     public Collection<ItemDto> searchItems(@RequestParam String text) {
         return itemService.searchItems(text);
+    }
+
+    @PostMapping("{itemId}/comment")
+    public Comment createComment(@RequestHeader("X-Sharer-User-Id") int userId,
+                                 @PathVariable int itemId,
+                                 @Valid @RequestBody NewCommentRequest request) {
+        return itemService.createComment(userId, itemId, request);
     }
 }
