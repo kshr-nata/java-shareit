@@ -3,11 +3,9 @@ package ru.practicum.shareit.item.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.model.User;
 
 import java.util.HashSet;
@@ -32,7 +30,7 @@ public class Item {
     @NotEmpty
     private String description;
     @NotNull
-    @Column(name="is_available")
+    @Column(name = "is_available")
     private Boolean available;
     @ManyToOne
     @JoinColumn(name = "owner_id")
@@ -40,7 +38,7 @@ public class Item {
 //    @JoinColumn(name = "user_id")
 //    private ItemRequest request;
     @ElementCollection
-    @CollectionTable(name="comments", joinColumns=@JoinColumn(name="item_id"))
-    @Column(name="text")
+    @CollectionTable(name = "comments", joinColumns=@JoinColumn(name = "item_id"))
+    @Column(name = "text")
     private Set<String> comments = new HashSet<>();
 }
