@@ -9,6 +9,7 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "bookings")
@@ -21,10 +22,10 @@ public class Booking {
     Integer id;
     @NotNull
     @Column(name="start_date")
-    LocalDate start;
+    LocalDateTime start;
     @NotNull
     @Column(name="end_date")
-    LocalDate end;
+    LocalDateTime end;
     @NotNull
     @ManyToOne
     @JoinColumn(name = "item_id")

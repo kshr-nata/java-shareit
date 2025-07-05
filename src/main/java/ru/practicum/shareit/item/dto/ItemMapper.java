@@ -2,6 +2,7 @@ package ru.practicum.shareit.item.dto;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import ru.practicum.shareit.booking.dto.BookingInfo;
 import ru.practicum.shareit.item.model.Item;
 
 import java.util.ArrayList;
@@ -16,6 +17,19 @@ public final class ItemMapper {
                 item.getName(),
                 item.getDescription(),
                 item.getAvailable(),
+                item.getComments()
+        );
+    }
+
+    public static ItemDtoWithBookingsInfo toItemDtoWithBookingInfo(
+            Item item, BookingInfo lastBooking, BookingInfo nextBooking) {
+        return new ItemDtoWithBookingsInfo(
+                item.getId(),
+                item.getName(),
+                item.getDescription(),
+                item.getAvailable(),
+                lastBooking,
+                nextBooking,
                 item.getComments()
         );
     }

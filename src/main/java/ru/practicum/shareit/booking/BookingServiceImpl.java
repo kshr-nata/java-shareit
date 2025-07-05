@@ -35,14 +35,16 @@ public class BookingServiceImpl implements BookingService {
                 -> new NotFoundException("Пользователь с id " + userId + " не найден."));
         Item item = itemRepository.findById(request.getItemId()).orElseThrow(()
                 -> new NotFoundException("Вещь с id " + request.getItemId() + " не найдена."));
+        if (!item.getAvailable()) {
+            throw new ValidationException("Вещь не доступна для бронирования!");
+        }
         Booking booking = BookingMapper.mapToBooking(request, user, item);
-        return BookingMapper.mapToBookingDTO(bookingRepository.save(booking));
+        Booking newBooking = bookingRepository.save(booking);
+        return BookingMapper.mapToBookingDTO(newBooking);
     }
 
     @Override
-    public void manageBooking(int userId, int bookingId, boolean approved) {
-        User user = userRepository.findById(userId).orElseThrow(()
-                -> new NotFoundException("Пользователь с id " + userId + " не найден."));
+    public BookingDto manageBooking(int userId, int bookingId, boolean approved) {
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(()
                 -> new NotFoundException("Бронирование с id " + bookingId + " не найдено."));
         if (booking.getItem().getOwner().getId() != userId) {
@@ -53,7 +55,7 @@ public class BookingServiceImpl implements BookingService {
         } else {
             booking.setStatus(BookingStatus.REJECTED);
         }
-        bookingRepository.save(booking);
+        return BookingMapper.mapToBookingDTO(bookingRepository.save(booking));
     }
 
     @Override

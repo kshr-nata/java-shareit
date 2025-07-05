@@ -25,21 +25,21 @@ public class BookingController {
     }
 
     @PostMapping
-    public BookingDto create(@RequestHeader("X-Sharer-User-Id") int userId, @Valid BookingNewRequest request) {
+    public BookingDto create(@RequestHeader("X-Sharer-User-Id") int userId, @Valid @RequestBody BookingNewRequest request) {
         return bookingService.create(userId, request);
     }
 
     @PatchMapping("{bookingId}")
-    public void manageBooking(@RequestHeader("X-Sharer-User-Id") int userId,
-                              @PathVariable int id,
+    public BookingDto manageBooking(@RequestHeader("X-Sharer-User-Id") int userId,
+                              @PathVariable int bookingId,
                               @RequestParam boolean approved) {
-        bookingService.manageBooking(userId, id, approved);
+        return bookingService.manageBooking(userId, bookingId, approved);
     }
 
     @GetMapping("{bookingId}")
     public BookingDto findById(@RequestHeader("X-Sharer-User-Id") int userId,
-                               @PathVariable int id) {
-        return bookingService.findById(userId, id);
+                               @PathVariable int bookingId) {
+        return bookingService.findById(userId, bookingId);
     }
 
     @GetMapping

@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.model.User;
 
@@ -13,7 +16,11 @@ import java.util.Set;
 /**
  * TODO Sprint add-controllers.
  */
-@Data
+@Entity
+@Table(name = "items")
+@Getter
+@Setter
+@ToString
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +35,11 @@ public class Item {
     @Column(name="is_available")
     private Boolean available;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "owner_id")
     private User owner;
 //    @JoinColumn(name = "user_id")
 //    private ItemRequest request;
+    @ElementCollection
     @CollectionTable(name="comments", joinColumns=@JoinColumn(name="item_id"))
     @Column(name="text")
     private Set<String> comments = new HashSet<>();

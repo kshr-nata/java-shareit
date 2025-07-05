@@ -9,7 +9,7 @@ public interface BookingService {
 
     BookingDto create(int userId, BookingNewRequest request);
 
-    void manageBooking(int userId, int bookingId, boolean approved);
+    BookingDto manageBooking(int userId, int bookingId, boolean approved);
 
     BookingDto findById(int userId, int bookingId);
 

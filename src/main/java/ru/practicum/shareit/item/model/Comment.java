@@ -9,6 +9,8 @@ import lombok.Setter;
 import lombok.ToString;
 import ru.practicum.shareit.user.model.User;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "comments")
 @Getter
@@ -29,4 +31,5 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
+    LocalDateTime created;
 }
