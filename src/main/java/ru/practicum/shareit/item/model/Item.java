@@ -38,7 +38,7 @@ public class Item {
 //    @JoinColumn(name = "user_id")
 //    private ItemRequest request;
     @ElementCollection
-    @CollectionTable(name = "comments", joinColumns=@JoinColumn(name = "item_id"))
+    @CollectionTable(name = "comments", joinColumns = @JoinColumn(name = "item_id"))
     @Column(name = "text")
     private Set<String> comments = new HashSet<>();
 }
