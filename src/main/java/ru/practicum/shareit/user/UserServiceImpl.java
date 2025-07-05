@@ -16,16 +16,16 @@ import java.util.Collection;
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-    private final UserStorage userStorage;
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserStorage userStorage) {
-        this.userStorage = userStorage;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public Collection<UserDto> findAll() {
-        return userStorage.findAll()
+        return userRepository.findAll()
                 .stream()
                 .map(UserMapper::toUserDto)
                 .toList();
@@ -33,37 +33,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto create(User request) {
-        if (userStorage.findUserByEmail(request.getEmail()).isPresent()) {
+        if (!userRepository.findByEmail(request.getEmail()).isEmpty()) {
             throw new ConflictException("Пользователь с email " + request.getEmail() + " уже существует!");
         }
-        User user = userStorage.create(request);
-        return UserMapper.toUserDto(user);
+        return UserMapper.toUserDto(userRepository.save(request));
     }
 
     @Override
     public UserDto update(int id, UserUpdateRequest request) {
-        User user = userStorage.findUserById(id).orElseThrow(()
+        User user = userRepository.findById(id).orElseThrow(()
                 -> new NotFoundException(String.format("Пользователь с id %d не найден",
                 id)));
-        if (userStorage.findUserByEmail(request.getEmail()).isPresent()
-                && userStorage.findUserByEmail(request.getEmail()).get().getId() != id) {
+        if (!userRepository.findByEmailIsAndIdNot(request.getEmail(), id).isEmpty()) {
             throw new ConflictException("Пользователь с email " + request.getEmail() + " уже существует!");
         }
-        user = UserMapper.updateUserFields(user, request);
-        user = userStorage.update(id, user);
-        return UserMapper.toUserDto(user);
+        return UserMapper.toUserDto(userRepository.save(UserMapper.updateUserFields(user, request)));
     }
 
     @Override
     public UserDto findUserById(int id) {
         log.debug("Вызван метод findUserById id = {}", id);
-        return userStorage.findUserById(id)
+        return userRepository.findById(id)
                 .map(UserMapper::toUserDto)
                 .orElseThrow(() -> new NotFoundException(String.format("Пользователь с id %d не найден", id)));
     }
 
     @Override
     public void deleteUserById(int id) {
-        userStorage.deleteUserById(id);
+        userRepository.deleteById(id);
     }
 }
