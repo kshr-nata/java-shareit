@@ -13,10 +13,10 @@ import lombok.ToString;
 @ToString
 public class UserDto {
     Integer id;
-    @NotNull
-    @NotEmpty
-    String name;
-    @Email
-    @NotBlank
+    @NotBlank(message = "Имя пользователя не может быть пустым")
+    private String name;
+
+    @NotBlank(message = "Email не может быть пустым")
+    @Email(message = "Некорректный формат email")
     String email;
 }

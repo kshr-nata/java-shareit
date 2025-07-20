@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 public class UserUpdateRequest {
     String name;
-    @Email
-    String email;
+    @Email(message = "Некорректный формат email")
+    private String email;
 
     public boolean hasEmail() {
         return ! (email == null || email.isBlank());

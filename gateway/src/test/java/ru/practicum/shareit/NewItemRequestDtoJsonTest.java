@@ -54,7 +54,7 @@ public class NewItemRequestDtoJsonTest {
 
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage())
-                .contains("не должно быть пустым");
+                .contains("Описание запроса не может быть пустым");
     }
 
     @Test
@@ -66,6 +66,6 @@ public class NewItemRequestDtoJsonTest {
 
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage())
-                .contains("не должно быть пустым");
+                .contains("Описание запроса не может быть пустым");
     }
 }

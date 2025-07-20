@@ -56,7 +56,7 @@ public class UserUpdateRequestJsonTest {
 
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage())
-                .contains("должно иметь формат адреса электронной почты");
+                .contains("Некорректный формат email");
     }
 
     @Test

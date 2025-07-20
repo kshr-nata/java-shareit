@@ -60,7 +60,7 @@ public class UserDtoJsonTest {
 
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage())
-                .contains("должно иметь формат адреса электронной почты");
+                .contains("Некорректный формат email");
     }
 
     @Test
@@ -73,7 +73,7 @@ public class UserDtoJsonTest {
 
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage())
-                .contains("не должно быть пустым");
+                .contains("Email не может быть пустым");
     }
 
     @Test
@@ -86,6 +86,6 @@ public class UserDtoJsonTest {
 
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage())
-                .contains("не должно быть пустым");
+                .contains("Имя пользователя не может быть пустым");
     }
 }

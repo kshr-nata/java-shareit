@@ -70,7 +70,7 @@ public class BookItemRequestDtoJsonTest {
 
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage())
-                .contains("должно содержать сегодняшнее число или дату");
+                .contains("Дата начала должна быть сегодня или позже");
     }
 
 

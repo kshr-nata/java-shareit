@@ -13,8 +13,9 @@ import lombok.*;
 @Data
 public class BookItemRequestDto {
 	private int itemId;
-	@FutureOrPresent
+	@FutureOrPresent(message = "Дата начала должна быть сегодня или позже")
 	private LocalDateTime start;
-	@Future
+
+	@Future(message = "Дата окончания должна быть в будущем")
 	private LocalDateTime end;
 }

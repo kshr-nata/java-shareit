@@ -54,7 +54,7 @@ public class NewCommentRequestJsonTest {
 
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage())
-                .contains("не должно быть пустым");
+                .contains("Текст комментария не может быть пустым");
     }
 
 }

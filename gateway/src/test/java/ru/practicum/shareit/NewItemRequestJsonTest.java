@@ -62,7 +62,7 @@ public class NewItemRequestJsonTest {
 
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage())
-                .contains("не должно быть пустым");
+                .contains("Название не может быть пустым");
     }
 
     @Test
@@ -76,7 +76,7 @@ public class NewItemRequestJsonTest {
 
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage())
-                .contains("не должно быть пустым");
+                .contains("Описание не может быть пустым");
     }
 
     @Test
@@ -90,6 +90,6 @@ public class NewItemRequestJsonTest {
 
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage())
-                .contains("не должно равняться null");
+                .contains("Статус доступности должен быть указан");
     }
 }
