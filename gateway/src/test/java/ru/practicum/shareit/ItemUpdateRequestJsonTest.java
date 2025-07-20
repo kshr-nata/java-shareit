@@ -1,7 +1,6 @@
-package ru.practicum.shareit.item.dto;
+package ru.practicum.shareit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import org.junit.jupiter.api.Test;
@@ -9,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.json.JsonContent;
-
-import java.util.Set;
+import ru.practicum.shareit.item.dto.ItemUpdateRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
