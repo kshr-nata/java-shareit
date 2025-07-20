@@ -10,8 +10,6 @@ import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.dto.UserUpdateRequest;
 import ru.practicum.shareit.user.model.User;
 
-import java.util.Collection;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
