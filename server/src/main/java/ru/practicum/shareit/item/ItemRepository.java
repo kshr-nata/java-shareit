@@ -16,9 +16,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
             "OR UPPER(it.description) LIKE UPPER(CONCAT('%', :textPart, '%'))))")
     List<Item> searchItems(@Param("textPart") String textPart);
 
-    @Query("SELECT it " +
-            "FROM Item it " +
-            "LEFT JOIN FETCH it.comments " +
+    @Query("SELECT DISTINCT it FROM Item it " +
+            "LEFT JOIN FETCH it.comments c " +
             "WHERE it.owner.id = :ownerId")
     List<Item> findAllWithCommentsByOwner(@Param("ownerId") Integer ownerId);
 

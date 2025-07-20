@@ -2,10 +2,9 @@ package ru.practicum.shareit.user.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * TODO Sprint add-controllers.
@@ -15,12 +14,17 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    String name;
-    @Email
     @NotNull
+    @NotEmpty
+    String name;
+    @NotNull
+    @NotEmpty
+    @Email
     String email;
 }

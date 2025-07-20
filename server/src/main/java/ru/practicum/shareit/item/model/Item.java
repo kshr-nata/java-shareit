@@ -3,23 +3,21 @@ package ru.practicum.shareit.item.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.model.User;
 
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * TODO Sprint add-controllers.
- */
+
 @Entity
 @Table(name = "items")
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor()
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,8 +37,7 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "request_id")
     private ItemRequest request;
-    @ElementCollection
-    @CollectionTable(name = "comments", joinColumns = @JoinColumn(name = "item_id"))
-    @Column(name = "text")
-    private Set<String> comments = new HashSet<>();
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private Set<Comment> comments = new HashSet<>();
 }

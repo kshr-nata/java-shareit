@@ -56,7 +56,7 @@ public class ItemServiceImpl implements ItemService {
                     item.getId(), LocalDateTime.now());
 
             // Получаем следующее бронирование
-            Optional<Booking> nextBookingOpt = bookingRepository.findFirstByItemIdAndEndBeforeOrderByStartDesc(
+            Optional<Booking> nextBookingOpt = bookingRepository.findFirstByItemIdAndStartAfterOrderByStartAsc(
                     item.getId(), LocalDateTime.now());
 
             if (lastBookingOpt.isPresent()) {
@@ -126,6 +126,8 @@ public class ItemServiceImpl implements ItemService {
             throw new ValidationException("Пользователь с id " + userId + " не брал вещь в аренду.");
         }
         Comment comment = CommentMapper.mapToComment(request,user, item);
+        item.getComments().add(comment);
+        itemRepository.save(item);
         return CommentMapper.mapToCommentDto(commentRepository.save(comment));
     }
 }

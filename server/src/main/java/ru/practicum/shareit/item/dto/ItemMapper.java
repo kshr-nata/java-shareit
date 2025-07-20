@@ -6,9 +6,12 @@ import ru.practicum.shareit.booking.dto.BookingInfo;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.model.User;
+import ru.practicum.shareit.item.model.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ItemMapper {
@@ -24,17 +27,23 @@ public final class ItemMapper {
     }
 
     public static ItemDto toItemDto(Item item) {
+        Set<String> commentTexts = item.getComments().stream()
+                .map(Comment::getText)
+                .collect(Collectors.toSet());
         return new ItemDto(
                 item.getId(),
                 item.getName(),
                 item.getDescription(),
                 item.getAvailable(),
-                item.getComments()
+                commentTexts
         );
     }
 
     public static ItemDtoWithBookingsInfo toItemDtoWithBookingInfo(
             Item item, BookingInfo lastBooking, BookingInfo nextBooking) {
+        Set<String> commentTexts = item.getComments().stream()
+                .map(Comment::getText)
+                .collect(Collectors.toSet());
         return new ItemDtoWithBookingsInfo(
                 item.getId(),
                 item.getName(),
@@ -42,7 +51,7 @@ public final class ItemMapper {
                 item.getAvailable(),
                 lastBooking,
                 nextBooking,
-                item.getComments()
+                commentTexts
         );
     }
 

@@ -4,13 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
@@ -46,10 +40,30 @@ public class BookingController {
 		return bookingClient.bookItem(userId, requestDto);
 	}
 
+	@PatchMapping("/{bookingId}")
+	public ResponseEntity<Object> manageBooking(
+			@RequestHeader("X-Sharer-User-Id") Integer userId,
+			@PathVariable Integer bookingId,
+			@RequestParam boolean approved) {
+		log.info("Managing booking {} for user {}, approved: {}", bookingId, userId, approved);
+		return bookingClient.manageBooking(userId, bookingId, approved);
+	}
+
+	@GetMapping("/owner")
+	public ResponseEntity<Object> findByOwnerId(
+			@RequestHeader("X-Sharer-User-Id") Integer userId,
+			@RequestParam(defaultValue = "ALL") BookingState state,
+			@PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
+			@Positive @RequestParam(defaultValue = "10") Integer size) {
+		log.info("Getting bookings for owner {}, state {}, from {}, size {}", userId, state, from, size);
+		return bookingClient.findByOwnerId(userId, state, from, size);
+	}
+
 	@GetMapping("/{bookingId}")
 	public ResponseEntity<Object> getBooking(@RequestHeader("X-Sharer-User-Id") int userId,
 			@PathVariable Integer bookingId) {
 		log.info("Get booking {}, userId={}", bookingId, userId);
 		return bookingClient.getBooking(userId, bookingId);
 	}
+
 }
