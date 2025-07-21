@@ -2,6 +2,7 @@ package ru.practicum.shareit.request;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.SharedHeaders;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
 import ru.practicum.shareit.request.dto.NewItemRequestDto;
 
@@ -19,13 +20,13 @@ public class ItemRequestController {
     }
 
     @PostMapping
-    public ItemRequestDto create(@RequestHeader("X-Sharer-User-Id") int userId,
+    public ItemRequestDto create(@RequestHeader(SharedHeaders.USER_ID_HEADER) int userId,
                                  @RequestBody NewItemRequestDto request) {
         return itemRequestService.create(userId, request);
     }
 
     @GetMapping
-    public List<ItemRequestDto> getRequestsByUser(@RequestHeader("X-Sharer-User-Id") int userId) {
+    public List<ItemRequestDto> getRequestsByUser(@RequestHeader(SharedHeaders.USER_ID_HEADER) int userId) {
         return itemRequestService.getRequestsByUser(userId);
     }
 

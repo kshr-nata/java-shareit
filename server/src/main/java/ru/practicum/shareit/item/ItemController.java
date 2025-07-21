@@ -3,6 +3,7 @@ package ru.practicum.shareit.item;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.SharedHeaders;
 import ru.practicum.shareit.item.dto.*;
 
 import java.util.Collection;
@@ -18,19 +19,19 @@ public class  ItemController {
     }
 
     @GetMapping
-    public Collection<ItemDtoWithBookingsInfo> findItemsByUser(@RequestHeader("X-Sharer-User-Id") int userId) {
+    public Collection<ItemDtoWithBookingsInfo> findItemsByUser(@RequestHeader(SharedHeaders.USER_ID_HEADER) int userId) {
         return itemService.findItemsByUserId(userId);
     }
 
     @PostMapping
-    public ItemDto create(@RequestHeader("X-Sharer-User-Id") int userId,
+    public ItemDto create(@RequestHeader(SharedHeaders.USER_ID_HEADER) int userId,
                           @Valid @RequestBody NewItemRequest item) {
         return itemService.create(userId, item);
 
     }
 
     @PatchMapping("/{id}")
-    public ItemDto update(@RequestHeader("X-Sharer-User-Id") int userId,
+    public ItemDto update(@RequestHeader(SharedHeaders.USER_ID_HEADER) int userId,
                           @PathVariable int id,
                           @Valid @RequestBody ItemUpdateRequest request) {
         return itemService.update(userId, id, request);
@@ -47,7 +48,7 @@ public class  ItemController {
     }
 
     @PostMapping("/{itemId}/comment")
-    public CommentDto createComment(@RequestHeader("X-Sharer-User-Id") int userId,
+    public CommentDto createComment(@RequestHeader(SharedHeaders.USER_ID_HEADER) int userId,
                                     @PathVariable int itemId,
                                     @Valid @RequestBody NewCommentRequest request) {
         return itemService.createComment(userId, itemId, request);
